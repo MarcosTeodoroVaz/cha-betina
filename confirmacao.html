@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chá de Bebê da Betina – Confirmação de Presença</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink-light: #fce8e8;
+    --pink-mid: #f4b8b8;
+    --pink-soft: #f9d0d0;
+    --blush: #e8a0a0;
+    --rose: #d97b7b;
+    --brown: #9c6b4e;
+    --brown-light: #c4956a;
+    --text-dark: #6b3f2a;
+    --text-mid: #9c6b4e;
+    --text-light: #c4956a;
+    --shadow: rgba(180, 100, 100, 0.15);
+    --green: #6bcf7f;
+    --green-light: #e8f8eb;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, #fff0f0 0%, #fde8e8 40%, #fdf0e8 100%);
+    min-height: 100vh;
+    padding: 20px 16px 60px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦';
+    position: fixed;
+    top: 10px; left: 0; right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: var(--pink-mid);
+    letter-spacing: 12px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+
+  /* ── Header ── */
+  .header { text-align: center; padding: 32px 20px 24px; }
+
+  .header-deco { display: flex; justify-content: center; gap: 6px; margin-bottom: 8px; }
+  .balloon {
+    width: 18px; height: 22px;
+    border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+  }
+  .balloon:nth-child(1){ background:#f4b8b8; animation-delay:0s; }
+  .balloon:nth-child(2){ background:#e8c4a0; animation-delay:.3s; }
+  .balloon:nth-child(3){ background:#f4b8b8; animation-delay:.6s; width:22px; height:26px; }
+  .balloon:nth-child(4){ background:#e8c4a0; animation-delay:.9s; }
+  .balloon:nth-child(5){ background:#f4b8b8; animation-delay:1.2s; }
+  @keyframes float { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+
+  .subtitle-label { font-family:'Dancing Script',cursive; font-size:1.1rem; color:var(--blush); margin-bottom:4px; }
+  .title-cha  { font-family:'Dancing Script',cursive; font-size:2.6rem; color:var(--rose); line-height:1; font-weight:700; }
+  .title-nome { font-family:'Dancing Script',cursive; font-size:3.4rem; color:var(--brown); line-height:1.1; font-weight:700; }
+
+  .header-info { display:flex; justify-content:center; gap:20px; margin-top:16px; flex-wrap:wrap; }
+  .info-pill {
+    background:white; border-radius:20px; padding:6px 18px;
+    font-size:0.82rem; font-weight:700; color:var(--text-mid);
+    box-shadow:0 2px 10px var(--shadow);
+  }
+  .info-pill span { color:var(--rose); font-size:1rem; }
+
+  .divider { text-align:center; margin:20px 0; color:var(--pink-mid); font-size:1.1rem; letter-spacing:8px; }
+
+  /* ── Card ── */
+  .card {
+    background:rgba(255,255,255,0.82);
+    backdrop-filter:blur(8px);
+    border-radius:24px;
+    box-shadow:0 8px 32px var(--shadow);
+    padding:24px 20px;
+    border:1.5px solid rgba(244,184,184,0.35);
+  }
+
+  .card-title { font-family:'Dancing Script',cursive; font-size:1.7rem; color:var(--brown); text-align:center; margin-bottom:6px; font-weight:700; }
+  .card-sub   { text-align:center; font-size:0.8rem; color:var(--text-light); margin-bottom:16px; }
+
+  /* ── Busca ── */
+  .search-wrap { position:relative; margin-bottom:16px; }
+  .search-input {
+    width:100%; border:1.5px solid var(--pink-mid); border-radius:14px;
+    padding:10px 16px 10px 40px;
+    font-size:0.88rem; font-family:'Nunito',sans-serif; font-weight:600;
+    color:var(--text-dark); background:rgba(255,255,255,0.9);
+    outline:none; transition:all 0.2s;
+  }
+  .search-input:focus { border-color:var(--rose); box-shadow:0 0 0 3px rgba(217,123,123,0.12); }
+  .search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); font-size:1rem; pointer-events:none; }
+
+  /* ── Status ── */
+  .status-bar { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .status-dot { width:8px; height:8px; border-radius:50%; background:#ccc; flex-shrink:0; transition:background 0.3s; }
+  .status-dot.online { background:#6bcf7f; }
+  .status-dot.saving { background:#f4b84a; animation:pulse 0.8s infinite; }
+  .status-dot.error  { background:#e87070; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .status-text { font-size:0.72rem; color:var(--text-light); font-weight:600; }
+
+  /* ── Contadores ── */
+  .counters {
+    display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;
+  }
+  .counter-pill {
+    flex:1; min-width:100px;
+    border-radius:14px; padding:10px 14px; text-align:center;
+    font-weight:700; font-size:0.78rem; letter-spacing:0.3px;
+  }
+  .counter-pill.total  { background:var(--pink-light); color:var(--text-mid); }
+  .counter-pill.confirmed { background:var(--green-light); color:#3a9a4e; }
+  .counter-pill.pending   { background:#fff8e8; color:#b07a20; }
+  .counter-pill .num { display:block; font-size:1.6rem; line-height:1.1; }
+
+  /* ── Progress ── */
+  .progress-wrap { background:var(--pink-light); border-radius:20px; height:10px; margin-bottom:6px; overflow:hidden; }
+  .progress-bar  { height:100%; background:linear-gradient(90deg,var(--green),#3a9a4e); border-radius:20px; transition:width 0.5s ease; }
+  .progress-label { text-align:right; font-size:0.75rem; font-weight:700; color:var(--text-mid); margin-bottom:18px; }
+
+  /* ── Skeleton ── */
+  .skeleton {
+    background:linear-gradient(90deg,#fce8e8 25%,#fdf0f0 50%,#fce8e8 75%);
+    background-size:200% 100%; animation:shimmer 1.2s infinite;
+    border-radius:10px; height:54px; margin:6px 0;
+  }
+  @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+  /* ── Lista ── */
+  .guest-list { list-style:none; display:flex; flex-direction:column; gap:6px; }
+
+  .guest-item {
+    display:flex; align-items:center; gap:12px;
+    padding:12px 14px; border-radius:14px;
+    background:rgba(255,255,255,0.6); border:1.5px solid transparent;
+    transition:all 0.25s ease; cursor:pointer;
+  }
+  .guest-item:hover { background:rgba(255,240,240,0.9); border-color:var(--pink-mid); transform:translateX(3px); }
+
+  .guest-item.confirmed {
+    background:linear-gradient(90deg, rgba(232,248,235,0.8), rgba(248,252,240,0.6));
+    border-color:#b2e0bc;
+  }
+
+  .guest-item.hidden { display:none; }
+
+  /* Toggle switch */
+  .toggle-wrap { flex-shrink:0; }
+  .toggle {
+    position:relative; width:46px; height:26px;
+    display:inline-block; flex-shrink:0;
+  }
+  .toggle input { opacity:0; width:0; height:0; }
+  .slider {
+    position:absolute; inset:0; border-radius:26px;
+    background:#f4b8b8; cursor:pointer;
+    transition:background 0.3s;
+  }
+  .slider::before {
+    content:''; position:absolute;
+    width:20px; height:20px; border-radius:50%;
+    background:white; left:3px; top:3px;
+    box-shadow:0 1px 4px rgba(0,0,0,0.2);
+    transition:transform 0.3s;
+  }
+  input:checked + .slider { background:linear-gradient(135deg,var(--green),#3a9a4e); }
+  input:checked + .slider::before { transform:translateX(20px); }
+
+  /* Guest info */
+  .guest-info { flex:1; min-width:0; }
+  .guest-name {
+    font-size:0.92rem; font-weight:700; color:var(--text-dark);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    transition:color 0.2s;
+  }
+  .guest-item.confirmed .guest-name { color:#3a7a4a; }
+
+  .guest-status {
+    font-size:0.72rem; font-weight:600; margin-top:2px;
+    color:var(--text-light); transition:color 0.2s;
+  }
+  .guest-item.confirmed .guest-status { color:#5aab6a; }
+
+  /* Badge */
+  .badge {
+    flex-shrink:0; font-size:0.7rem; font-weight:700;
+    padding:3px 10px; border-radius:20px;
+    letter-spacing:0.4px; transition:all 0.2s;
+  }
+  .badge.yes { background:var(--green-light); color:#3a9a4e; }
+  .badge.no  { background:var(--pink-light);  color:var(--rose); }
+
+  /* Empty state */
+  .empty-state { text-align:center; padding:32px 20px; color:var(--text-light); font-size:0.88rem; }
+
+  /* Footer */
+  .footer { text-align:center; margin-top:28px; font-family:'Dancing Script',cursive; font-size:1.3rem; color:var(--brown-light); }
+  .footer small { display:block; font-family:'Nunito',sans-serif; font-size:0.72rem; color:var(--text-light); margin-top:4px; letter-spacing:0.5px; font-weight:600; text-transform:uppercase; }
+
+  /* Dots bg */
+  .confetti { position:fixed; pointer-events:none; top:0; left:0; width:100%; height:100%; z-index:0; overflow:hidden; }
+  .dot { position:absolute; border-radius:50%; opacity:0.18; animation:drift linear infinite; }
+  @keyframes drift {
+    0%{transform:translateY(-20px) rotate(0deg);opacity:0}
+    10%{opacity:0.18} 90%{opacity:0.12}
+    100%{transform:translateY(110vh) rotate(360deg);opacity:0}
+  }
+
+  @media(max-width:480px){
+    .title-cha{font-size:2rem} .title-nome{font-size:2.6rem}
+    .guest-name{font-size:0.85rem}
+  }
+</style>
+</head>
+<body>
+
+<div class="confetti" id="confetti"></div>
+
+<div class="page-wrap">
+  <div class="header">
+    <div class="header-deco">
+      <span class="balloon"></span><span class="balloon"></span>
+      <span class="balloon"></span><span class="balloon"></span><span class="balloon"></span>
+    </div>
+    <div class="subtitle-label">♡ Confirmação de Presença ♡</div>
+    <div class="title-cha">Chá de Bebê</div>
+    <div class="title-nome">da Betina</div>
+    <div class="header-info">
+      <div class="info-pill">📅 <span>31</span> de Maio</div>
+      <div class="info-pill">🕐 <span>14h30</span></div>
+      <div class="info-pill">📍 Mangueirinha/PR</div>
+    </div>
+  </div>
+
+  <div class="divider">✦ ✧ ✦</div>
+
+  <div class="card">
+    <div class="card-title">🌸 Confirmação de Presença</div>
+    <div class="card-sub">Encontre seu nome e confirme se vai estar com a gente ✨</div>
+
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="searchInput" placeholder="Buscar nome...">
+    </div>
+
+    <div class="status-bar">
+      <div class="status-dot" id="statusDot"></div>
+      <span class="status-text" id="statusText">Conectando...</span>
+    </div>
+
+    <div class="counters">
+      <div class="counter-pill total">
+        <span class="num" id="cntTotal">–</span>
+        convidadas
+      </div>
+      <div class="counter-pill confirmed">
+        <span class="num" id="cntConfirmed">–</span>
+        confirmadas ✓
+      </div>
+      <div class="counter-pill pending">
+        <span class="num" id="cntPending">–</span>
+        aguardando
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="progress-label" id="progressLabel">carregando...</div>
+
+    <ul class="guest-list" id="guestList">
+      <li class="skeleton"></li><li class="skeleton"></li>
+      <li class="skeleton"></li><li class="skeleton"></li>
+      <li class="skeleton"></li>
+    </ul>
+    <div class="empty-state" id="emptyState" style="display:none">Nenhuma convidada encontrada 🌸</div>
+  </div>
+
+  <div class="footer">
+    Esperamos por você! 🌸
+    <small>ASERMAN – Rua Manoel Ferreira Lima, 165 – Mangueirinha/PR</small>
+  </div>
+</div>
+
+<script>
+// ── Config Supabase ──────────────────────────────────────────
+const SUPABASE_URL = 'https://lczpupmgcwzpvgdqbsyk.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjenB1cG1nY3d6cHZnZHFic3lrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0Mjg2ODQsImV4cCI6MjA5NDAwNDY4NH0.Q37ZKeNquSx2082a0e0gL9ITw0P_ApdhlGXm1MuBMxI';
+const TABLE = 'convidadas';
+const HEADERS = {
+  'apikey': SUPABASE_KEY,
+  'Authorization': `Bearer ${SUPABASE_KEY}`,
+  'Content-Type': 'application/json',
+  'Prefer': 'return=minimal'
+};
+
+let guests = []; // array de { id, nome, confirmada }
+
+// ── Status ───────────────────────────────────────────────────
+function setStatus(type, msg) {
+  document.getElementById('statusDot').className = 'status-dot ' + type;
+  document.getElementById('statusText').textContent = msg;
+}
+
+// ── Carregar ─────────────────────────────────────────────────
+async function loadFromDB() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/${TABLE}?select=id,nome,confirmada&order=nome`,
+      { headers: HEADERS }
+    );
+    if (!res.ok) throw new Error(await res.text());
+    guests = await res.json();
+    setStatus('online', 'Conectado ✓');
+    return true;
+  } catch (e) {
+    console.error(e);
+    setStatus('error', 'Erro de conexão – recarregue a página');
+    return false;
+  }
+}
+
+// ── Salvar ───────────────────────────────────────────────────
+async function saveToDB(id, confirmada) {
+  setStatus('saving', 'Salvando...');
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/${TABLE}?id=eq.${id}`,
+      { method:'PATCH', headers:HEADERS, body:JSON.stringify({ confirmada }) }
+    );
+    if (!res.ok) throw new Error(await res.text());
+    setStatus('online', 'Salvo ✓');
+  } catch (e) {
+    console.error(e);
+    setStatus('error', 'Erro ao salvar');
+  }
+}
+
+// ── Contadores ───────────────────────────────────────────────
+function updateCounters() {
+  const total     = guests.length;
+  const confirmed = guests.filter(g => g.confirmada).length;
+  const pending   = total - confirmed;
+  const pct       = total ? Math.round(confirmed/total*100) : 0;
+
+  document.getElementById('cntTotal').textContent     = total;
+  document.getElementById('cntConfirmed').textContent = confirmed;
+  document.getElementById('cntPending').textContent   = pending;
+  document.getElementById('progressBar').style.width  = pct + '%';
+  document.getElementById('progressLabel').textContent =
+    `${confirmed} de ${total} confirmações (${pct}%)`;
+}
+
+// ── Filtro de busca ───────────────────────────────────────────
+function applyFilter(term) {
+  const items = document.querySelectorAll('.guest-item');
+  let visible = 0;
+  items.forEach(li => {
+    const name = li.dataset.name.toLowerCase();
+    const show = name.includes(term.toLowerCase());
+    li.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+  document.getElementById('emptyState').style.display = visible === 0 ? 'block' : 'none';
+}
+
+// ── Render ───────────────────────────────────────────────────
+function renderList() {
+  const list = document.getElementById('guestList');
+  list.innerHTML = '';
+
+  guests.forEach(g => {
+    const li = document.createElement('li');
+    li.className = 'guest-item' + (g.confirmada ? ' confirmed' : '');
+    li.dataset.name = g.nome;
+
+    li.innerHTML = `
+      <div class="toggle-wrap">
+        <label class="toggle" title="${g.confirmada ? 'Clique para cancelar confirmação' : 'Clique para confirmar presença'}">
+          <input type="checkbox" ${g.confirmada ? 'checked' : ''} data-id="${g.id}">
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="guest-info">
+        <div class="guest-name">${g.nome}</div>
+        <div class="guest-status">${g.confirmada ? '✓ Presença confirmada' : 'Aguardando confirmação'}</div>
+      </div>
+      <span class="badge ${g.confirmada ? 'yes' : 'no'}">${g.confirmada ? 'Confirmada' : 'Pendente'}</span>
+    `;
+
+    // Toggle
+    li.querySelector('input[type=checkbox]').addEventListener('change', async e => {
+      e.stopPropagation();
+      const id = +e.target.dataset.id;
+      const val = e.target.checked;
+
+      // Atualiza local
+      const guest = guests.find(g => g.id === id);
+      if (guest) guest.confirmada = val;
+
+      // Atualiza visual
+      li.classList.toggle('confirmed', val);
+      li.querySelector('.guest-status').textContent = val ? '✓ Presença confirmada' : 'Aguardando confirmação';
+      li.querySelector('.badge').className = 'badge ' + (val ? 'yes' : 'no');
+      li.querySelector('.badge').textContent = val ? 'Confirmada' : 'Pendente';
+
+      updateCounters();
+      await saveToDB(id, val);
+    });
+
+    // Clique na linha inteira também togla
+    li.addEventListener('click', e => {
+      if (e.target.closest('.toggle-wrap')) return;
+      const cb = li.querySelector('input[type=checkbox]');
+      cb.checked = !cb.checked;
+      cb.dispatchEvent(new Event('change'));
+    });
+
+    list.appendChild(li);
+  });
+
+  updateCounters();
+
+  // Reaplicar filtro se já havia busca
+  const term = document.getElementById('searchInput').value;
+  if (term) applyFilter(term);
+}
+
+// ── Busca ────────────────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', e => {
+  applyFilter(e.target.value);
+});
+
+// ── Dots decorativos ─────────────────────────────────────────
+function makeConfetti() {
+  const c = document.getElementById('confetti');
+  const colors = ['#f4b8b8','#e8c4a0','#fde8e8','#d97b7b','#c4956a'];
+  for (let i = 0; i < 22; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    const sz = 6 + Math.random()*14;
+    d.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${12+Math.random()*18}s;animation-delay:${-Math.random()*20}s;`;
+    c.appendChild(d);
+  }
+}
+
+// ── Init ─────────────────────────────────────────────────────
+async function init() {
+  makeConfetti();
+  const ok = await loadFromDB();
+  if (ok) renderList();
+}
+
+init();
+</script>
+</body>
+</html>
